@@ -4,6 +4,8 @@
 
 DjangoとCeleryを使ったサンプルプロジェクトです。
 
+Zennの記事は[こちら](https://zenn.dev/enken/articles/enken-django-celery)
+
 ## 使い方
 
 Dockerの使える環境を前提としています．
