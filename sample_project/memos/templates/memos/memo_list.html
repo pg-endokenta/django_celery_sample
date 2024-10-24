@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memo Form</title>
+</head>
+<body>
+    <h1>Memos</h1>
+    <a href="{% url 'memos:memo-create' %}">New Memo</a>
+    <ul>
+    {% for memo in object_list %}
+        <li>{{ memo.content }}</li>
+        <ul>
+            {% for comment in memo.ai_comments.all %}
+            <li>{{ comment.content }}</li>
+            {% empty %}
+            <li>No AI comments yet.</li>
+            {% endfor %}
+        </ul>
+    {% empty %}
+        <li>No memos yet.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

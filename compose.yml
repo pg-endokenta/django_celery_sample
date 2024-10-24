@@ -1,0 +1,41 @@
+services:
+  django:
+    build: ./sample_project
+    command: ['bash', '-c', 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000']
+    env_file:
+      - .env_sample
+    volumes:
+      - ./sample_project:/sample_project
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+    networks:
+      - sample-network
+
+  # RabbitMQ service
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    ports:
+      - "15672:15672"  # RabbitMQの管理UIポート
+    env_file:
+      - .env_sample
+    networks:
+      - sample-network
+
+  celery:
+    build: ./sample_project
+    command: ['bash', '-c', 'celery -A config worker -l info']
+    env_file:
+      - .env_sample
+    volumes:
+      - ./sample_project:/sample_project
+    depends_on:
+      - rabbitmq
+    networks:
+      - sample-network
+
+
+networks:
+  sample-network:
+    driver: bridge
