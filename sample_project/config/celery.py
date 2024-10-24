@@ -1,5 +1,4 @@
 import os
-from django.conf import settings
 from celery import Celery
 
 # Djangoの設定モジュールを環境変数として指定
